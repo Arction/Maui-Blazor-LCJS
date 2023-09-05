@@ -37,7 +37,7 @@ This is a completely custom script that works together with the C# client applic
         {
             return;
         }
-        await JS.InvokeVoidAsync("createChart", "chart
+        await JS.InvokeVoidAsync("createChart", "chart");
     }
 }
 ```
