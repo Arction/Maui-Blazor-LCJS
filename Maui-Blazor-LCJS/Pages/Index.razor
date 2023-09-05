@@ -1,0 +1,29 @@
+﻿@page "/"
+@inject IJSRuntime JS
+@inject NavigationManager Navigation;
+@using System.Text.Json;
+
+<div id="chart" style="width:50vw;height:50vh;"></div>
+
+@code {
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+        await JS.InvokeVoidAsync("createChart", "chart");
+
+        Random random = new Random();
+        for (int i = 0; i < 5000; i += 1)
+        {
+            var data = new {
+                 x = i,
+                 y = random.NextDouble()
+            };
+            await JS.InvokeVoidAsync("setChartData", "chart", JsonSerializer.Serialize(data));
+            await Task.Delay(10);
+        }
+    }
+}
